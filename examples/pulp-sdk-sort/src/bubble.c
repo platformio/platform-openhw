@@ -22,25 +22,12 @@ for (i = 0; i < n-1; i++)
 			swap(&arr[j], &arr[j+1]); 
 } 
 
-/* Function to print an array */
-void printArray(int arr[], int size) 
-{ 
-	int i; 
-	for (i=0; i < size; i++) 
-		printf("%d ", arr[i]); 
-	printf("n\n\r"); 
-} 
-
 // Driver program to test above functions 
 int main() 
 { 
 	int arr[] = { 2, 50, 105, 64, 34, 25, 12, 22, 11, 90}; 
 	int n = sizeof(arr)/sizeof(arr[0]);
-    //printf("Unsorted array: \n\r");
-	//printArray(arr,n);	
 	bubbleSort(arr, n); 
-	//printf("Sorted array: \n\r"); 
-	//printArray(arr, n); 
 	return 0; 
 } 
 

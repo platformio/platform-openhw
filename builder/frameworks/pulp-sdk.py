@@ -236,6 +236,7 @@ libs = [
             "+<drivers_deprecated/pads/i2c-v2.c>",
             "+<drivers_deprecated/uart/uart.c>",
             "+<drivers_deprecated/spim/spim-v3.c>",
+            "+<drivers_deprecated/gpio/gpio-v3.c>",
         ]
         + ["-<drivers/%s>" % d for d in disabled_drivers]
         + ["-<kernel/%s>" % k for k in disabled_kernel_parts],

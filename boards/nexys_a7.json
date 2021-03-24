@@ -9,7 +9,7 @@
       ]
     ],
     "mabi": "ilp32",
-    "march": "rv32imfcxpulpv2",
+    "march": "rv32imc",
     "mcmodel": "medlow"
   },
   "debug": {

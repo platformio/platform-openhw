@@ -37,6 +37,7 @@ env.Append(
     ],
     LINKFLAGS=[
         "-march=%s" % board_config.get("build.march"),
+        "-nostartfiles"
     ],
     LIBS=["gcc"],
 )

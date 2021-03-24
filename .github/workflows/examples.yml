@@ -8,10 +8,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-16.04, windows-latest, macos-latest]
-        python-version: [3.6, 3.7]
+        python-version: [3.7]
         example:
           - "examples/pulp-sdk-asm"
           - "examples/pulp-sdk-sort"
+          - "examples/native-asm"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2

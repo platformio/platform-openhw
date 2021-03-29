@@ -41,7 +41,8 @@ class OpenhwPlatform(PlatformBase):
             "olimex-arm-usb-tiny-h",
             "olimex-arm-usb-ocd-h",
             "olimex-arm-usb-ocd",
-            "olimex-jtag-tiny"
+            "olimex-jtag-tiny",
+            "ovpsim"
         )
         for tool in tools:
             if tool in debug["tools"]:
@@ -65,7 +66,23 @@ class OpenhwPlatform(PlatformBase):
                 "end",
             ]
 
-            if tool == "digilent-hs2":
+            if tool == "ovpsim":
+                server_executable = "riscvOVPsimCOREV"
+                server_package = "tool-ovpsim-corev"
+                server_args = [
+                    "--variant", "CV32E40P",
+                    "--port", "3333",
+                    "--program",
+                    "$PROG_PATH"
+                ]
+                reset_cmds = [
+                    "define pio_reset_halt_target",
+                    "end",
+                    "define pio_reset_run_target",
+                    "end",
+                ]
+
+            elif tool == "digilent-hs2":
                 server_args.extend(["-f", "digilent-hs2.cfg"])
             else:
                 # All tools are FTDI based

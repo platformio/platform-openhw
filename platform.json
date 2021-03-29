@@ -45,6 +45,12 @@
       "type": "uploader",
       "owner": "platformio",
       "version": "~1.1000.0"
+    },
+    "tool-ovpsim-corev": {
+      "optional": true,
+      "type": "debugger",
+      "owner": "platformio",
+      "version": "~0.0.20210312"
     }
   }
 }

@@ -13,6 +13,7 @@ jobs:
           - "examples/pulp-sdk-asm"
           - "examples/pulp-sdk-sort"
           - "examples/native-asm"
+          - "examples/native-sort"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2

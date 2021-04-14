@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from os.path import join
+import os
+import platform
 
 from platformio.managers.platform import PlatformBase
 
@@ -42,75 +43,90 @@ class OpenhwPlatform(PlatformBase):
             "olimex-arm-usb-ocd-h",
             "olimex-arm-usb-ocd",
             "olimex-jtag-tiny",
-            "ovpsim"
+            "ovpsim",
+            "renode"
         )
         for tool in tools:
             if tool in debug["tools"]:
                 continue
-            server_executable = "bin/openocd"
-            server_package = "tool-openocd-riscv-pulp"
-            server_args = [
-                "-s",
-                join(self.get_dir(), "misc", "openocd"),
-                "-s",
-                "$PACKAGE_DIR/share/openocd/scripts"
-            ]
-            reset_cmds = [
-                "define pio_reset_halt_target",
-                "   load",
-                "   monitor reset halt",
-                "end",
-                "define pio_reset_run_target",
-                "   load",
-                "   monitor reset",
-                "end",
-            ]
 
             if tool == "ovpsim":
-                server_executable = "riscvOVPsimCOREV"
-                server_package = "tool-ovpsim-corev"
-                server_args = [
-                    "--variant", "CV32E40P",
-                    "--port", "3333",
-                    "--program",
-                    "$PROG_PATH"
-                ]
-                reset_cmds = [
-                    "define pio_reset_halt_target",
-                    "end",
-                    "define pio_reset_run_target",
-                    "end",
-                ]
+                debug["tools"][tool] = {
+                    "init_cmds": [
+                        "define pio_reset_halt_target",
+                        "end",
+                        "define pio_reset_run_target",
+                        "end",
+                        "set mem inaccessible-by-default off",
+                        "set arch riscv:rv32",
+                        "set remotetimeout 250",
+                        "target extended-remote $DEBUG_PORT",
+                        "$INIT_BREAK",
+                        "$LOAD_CMDS",
+                    ],
+                    "server": {
+                        "package": "tool-ovpsim-corev",
+                        "arguments": [
+                            "--variant", "CV32E40P",
+                            "--port", "3333",
+                            "--program",
+                            "$PROG_PATH"
+                        ],
+                        "executable": "riscvOVPsimCOREV"
+                    },
+                    "onboard": True
+                }
 
-            elif tool == "digilent-hs2":
-                server_args.extend(["-f", "digilent-hs2.cfg"])
+            elif tool == "renode":
+                debug["tools"][tool] = {
+                    "server": {
+                        "package": "tool-renode",
+                        "arguments": [
+                            "--disable-xwt",
+                            "-e", "include @%s" % os.path.join(
+                                self.get_dir(), "misc", "renode", "openhw_cv32e40p.resc"),
+                            "-e", "machine StartGdbServer 3333 True"
+                        ],
+                        "ready_pattern": "GDB server with all CPUs started on port",
+                        "executable": ("bin/Renode.exe" if platform.system() == "Windows" else "renode")
+                    },
+                    "onboard": True
+                }
+
             else:
-                # All tools are FTDI based
-                server_args.extend(
-                    [
-                        "-f",
-                        "interface/ftdi/%s.cfg" % tool,
-                        "-f",
-                        "cv32e40p_nexys.cfg",
-                    ]
-                )
-
-            debug["tools"][tool] = {
-                "init_cmds": reset_cmds + [
-                    "set mem inaccessible-by-default off",
-                    "set arch riscv:rv32",
-                    "set remotetimeout 250",
-                    "target extended-remote $DEBUG_PORT",
-                    "$INIT_BREAK",
-                    "$LOAD_CMDS",
-                ],
-                "server": {
-                    "package": server_package,
-                    "executable": server_executable,
-                    "arguments": server_args,
-                },
-                "onboard": tool in debug.get("onboard_tools", [])
-            }
+                debug["tools"][tool] = {
+                    "init_cmds": [
+                        "define pio_reset_halt_target",
+                        "   load",
+                        "   monitor reset halt",
+                        "end",
+                        "define pio_reset_run_target",
+                        "   load",
+                        "   monitor reset",
+                        "end",
+                        "set mem inaccessible-by-default off",
+                        "set arch riscv:rv32",
+                        "set remotetimeout 250",
+                        "target extended-remote $DEBUG_PORT",
+                        "$INIT_BREAK",
+                        "$LOAD_CMDS",
+                    ],
+                    "server": {
+                        "package": "tool-openocd-riscv-pulp",
+                        "executable": "bin/openocd",
+                        "arguments": [
+                            "-s",
+                            os.path.join(self.get_dir(), "misc", "openocd"),
+                            "-s",
+                            "$PACKAGE_DIR/share/openocd/scripts",
+                            "-f",
+                            ("digilent-hs2.cfg" if tool == "digilent-hs2" else ("interface/ftdi/%s.cfg" % tool)),
+                            "-f",
+                            "cv32e40p_nexys.cfg",
+                        ]
+                    },
+                    "onboard": tool in debug.get("onboard_tools", []),
+                }
 
         board.manifest["debug"] = debug
         return board

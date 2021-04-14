@@ -64,6 +64,12 @@
       "type": "debugger",
       "owner": "platformio",
       "version": "~0.0.20210312"
+    },
+    "tool-renode": {
+      "type": "debugger",
+      "optional": true,
+      "owner": "platformio",
+      "version": "~1.11200.0"
     }
   }
 }

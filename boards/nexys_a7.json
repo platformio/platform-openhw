@@ -17,7 +17,7 @@
       "digilent-hs1"
     ]
   },
-  "frameworks": ["pulp-sdk"],
+  "frameworks": ["pulp-sdk", "pulp-runtime"],
   "name": "Digilent Nexys A7",
   "upload": {
     "maximum_ram_size": 1216512,

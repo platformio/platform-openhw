@@ -12,6 +12,7 @@ jobs:
         example:
           - "examples/pulp-sdk-asm"
           - "examples/pulp-sdk-sort"
+          - "examples/pulp-runtime-sort"
           - "examples/native-asm"
           - "examples/native-sort"
     runs-on: ${{ matrix.os }}

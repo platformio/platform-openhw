@@ -26,6 +26,13 @@
       "description": "Software Development Kit for Parallel Ultra Low Power platform targeting high energy efficiencies",
       "homepage": "https://github.com/pulp-platform/pulp-sdk",
       "title": "PULP SDK"
+    },
+    "pulp-runtime": {
+      "package": "framework-pulp-runtime",
+      "script": "builder/frameworks/pulp-runtime.py",
+      "description": "Runtime Environment for Parallel Ultra Low Power platform targeting high energy efficiencies",
+      "homepage": "https://github.com/pulp-platform/pulp-runtime",
+      "title": "PULP Runtime Environment"
     }
   },
   "packages": {
@@ -39,6 +46,12 @@
       "type": "framework",
       "owner": "platformio",
       "version": "0.0.0-alpha+sha.83dff28992"
+    },
+    "framework-pulp-runtime": {
+      "optional": true,
+      "type": "framework",
+      "owner": "platformio",
+      "version": "0.0.0-alpha+sha.252cecba03"
     },
     "tool-openocd-riscv-pulp": {
       "optional": true,

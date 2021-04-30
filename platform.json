@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/platformio/platform-openhw.git"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "frameworks": {
     "pulp-sdk": {
       "package": "framework-pulp-sdk",
@@ -26,6 +26,13 @@
       "description": "Software Development Kit for Parallel Ultra Low Power platform targeting high energy efficiencies",
       "homepage": "https://github.com/pulp-platform/pulp-sdk",
       "title": "PULP SDK"
+    },
+    "pulp-runtime": {
+      "package": "framework-pulp-runtime",
+      "script": "builder/frameworks/pulp-runtime.py",
+      "description": "Runtime Environment for Parallel Ultra Low Power platform targeting high energy efficiencies",
+      "homepage": "https://github.com/pulp-platform/pulp-runtime",
+      "title": "PULP Runtime Environment"
     }
   },
   "packages": {
@@ -40,11 +47,29 @@
       "owner": "platformio",
       "version": "0.0.0-alpha+sha.83dff28992"
     },
+    "framework-pulp-runtime": {
+      "optional": true,
+      "type": "framework",
+      "owner": "platformio",
+      "version": "0.0.0-alpha+sha.252cecba03"
+    },
     "tool-openocd-riscv-pulp": {
       "optional": true,
       "type": "uploader",
       "owner": "platformio",
       "version": "~1.1000.0"
+    },
+    "tool-ovpsim-corev": {
+      "optional": true,
+      "type": "debugger",
+      "owner": "platformio",
+      "version": "~0.0.20210312"
+    },
+    "tool-renode": {
+      "type": "debugger",
+      "optional": true,
+      "owner": "platformio",
+      "version": "~1.11200.0"
     }
   }
 }

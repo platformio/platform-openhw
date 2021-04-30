@@ -184,30 +184,40 @@ upload_actions = []
 upload_target = target_elf
 
 if upload_protocol in debug_tools:
-    openocd_args = [
-        "-c",
-        "debug_level %d" % (2 if int(ARGUMENTS.get("PIOVERBOSE", 0)) else 1),
-        "-s",
-        platform.get_package_dir("tool-openocd-riscv-pulp") or "",
-    ]
-    openocd_args.extend(
-        debug_tools.get(upload_protocol).get("server").get("arguments", [])
-    )
-    openocd_args.extend(
-        [
+    if upload_protocol == "renode":
+        uploader = "renode"
+        uploader_flags = [arg for arg in debug_tools.get(upload_protocol).get(
+            "server").get("arguments", []) if arg != "--disable-xwt"]
+        uploader_flags.extend([
+            "-e", "sysbus LoadELF @$SOURCE",
+            "-e", "start"
+        ])
+    else:
+        uploader = "openocd"
+        uploader_flags = [
             "-c",
-            "load_image {$SOURCE} %s"
-            % board_config.get("upload").get("image_offset", ""),
-            "-c",
-            "reset run",
-            "-c",
-            "shutdown",
+            "debug_level %d" % (2 if int(ARGUMENTS.get("PIOVERBOSE", 0)) else 1),
+            "-s",
+            platform.get_package_dir("tool-openocd-riscv-pulp") or "",
         ]
-    )
+        uploader_flags.extend(
+            debug_tools.get(upload_protocol).get("server").get("arguments", [])
+        )
+        uploader_flags.extend(
+            [
+                "-c",
+                "load_image {$SOURCE} %s"
+                % board_config.get("upload").get("image_offset", ""),
+                "-c",
+                "reset run",
+                "-c",
+                "shutdown",
+            ]
+        )
 
     env.Replace(
-        UPLOADER="openocd",
-        UPLOADERFLAGS=openocd_args,
+        UPLOADER=uploader,
+        UPLOADERFLAGS=uploader_flags,
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS",
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]

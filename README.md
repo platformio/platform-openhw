@@ -1,6 +1,6 @@
 # OpenHW Group: development platform for [PlatformIO](http://platformio.org)
 
-![alt text](https://github.com/platformio/platform-openhw/workflows/Examples/badge.svg "OpenHW Group development platform")
+[![Build Status](https://github.com/platformio/platform-openhw/workflows/Examples/badge.svg)](https://github.com/platformio/platform-openhw/actions)
 
 The OpenHW CV32E40P RISC-V core is the first open-source core for high-volume chips verified with the state-of-the-art process required for high-integrity, commercial SoCs.
 

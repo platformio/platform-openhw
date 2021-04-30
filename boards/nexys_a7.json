@@ -9,7 +9,7 @@
       ]
     ],
     "mabi": "ilp32",
-    "march": "rv32imfcxpulpv2",
+    "march": "rv32imc",
     "mcmodel": "medlow"
   },
   "debug": {
@@ -17,7 +17,7 @@
       "digilent-hs1"
     ]
   },
-  "frameworks": ["pulp-sdk"],
+  "frameworks": ["pulp-sdk", "pulp-runtime"],
   "name": "Digilent Nexys A7",
   "upload": {
     "maximum_ram_size": 1216512,

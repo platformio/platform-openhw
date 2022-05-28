@@ -132,7 +132,10 @@ def generate_app_config(output_dir):
 env.SConscript("_bare.py")
 
 env.Append(
-    ASPPFLAGS=["-DLANGUAGE_ASSEMBLY"],
+    ASPPFLAGS=[
+        "-DLANGUAGE_ASSEMBLY",
+        ("-include", os.path.join("$BUILD_DIR", "configs", "sdk", "fc_config.h")),
+    ],
     CCFLAGS=[
         "-Wall",
         "-Wextra",

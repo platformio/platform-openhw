@@ -35,7 +35,10 @@ board_config = env.BoardConfig()
 env.SConscript("_bare.py")
 
 env.Append(
-    ASPPFLAGS=["-DLANGUAGE_ASSEMBLY"],
+    ASPPFLAGS=[
+        "-DLANGUAGE_ASSEMBLY",
+        "-include", "chips/pulpissimo/config.h",
+    ],
 
     CCFLAGS=[
         "-include", "chips/pulpissimo/config.h",

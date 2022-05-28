@@ -13,21 +13,22 @@
 # limitations under the License.
 
 import os
-import platform
+import sys
 
-from platformio.managers.platform import PlatformBase
+from platformio.public import PlatformBase
 
+IS_WINDOWS = sys.platform.startswith("win")
 
 class OpenhwPlatform(PlatformBase):
 
     def get_boards(self, id_=None):
-        result = PlatformBase.get_boards(self, id_)
+        result = super().get_boards(id_)
         if not result:
             return result
         if id_:
             return self._add_default_debug_tools(result)
         else:
-            for key, value in result.items():
+            for key in result:
                 result[key] = self._add_default_debug_tools(result[key])
         return result
 
@@ -88,7 +89,7 @@ class OpenhwPlatform(PlatformBase):
                             "-e", "machine StartGdbServer 3333 True"
                         ],
                         "ready_pattern": "GDB server with all CPUs started on port",
-                        "executable": ("bin/Renode.exe" if platform.system() == "Windows" else "renode")
+                        "executable": ("bin/Renode.exe" if IS_WINDOWS else "renode")
                     },
                     "onboard": True
                 }

@@ -1,4 +1,4 @@
-# OpenHW Group: development platform for [PlatformIO](http://platformio.org)
+# OpenHW Group: development platform for [PlatformIO](https://platformio.org)
 
 [![Build Status](https://github.com/platformio/platform-openhw/workflows/Examples/badge.svg)](https://github.com/platformio/platform-openhw/actions)
 
@@ -9,7 +9,7 @@ The OpenHW CV32E40P RISC-V core is the first open-source core for high-volume ch
 
 # Usage
 
-1. [Install PlatformIO](http://platformio.org)
+1. [Install PlatformIO](https://platformio.org)
 2. Create PlatformIO project and configure a platform option in [platformio.ini](https://docs.platformio.org/page/projectconf.html) file:
 
 ## Stable version

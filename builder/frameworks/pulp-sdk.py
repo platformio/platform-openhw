@@ -132,7 +132,10 @@ def generate_app_config(output_dir):
 env.SConscript("_bare.py")
 
 env.Append(
-    ASFLAGS=["-DLANGUAGE_ASSEMBLY"],
+    ASPPFLAGS=[
+        "-DLANGUAGE_ASSEMBLY",
+        ("-include", os.path.join("$BUILD_DIR", "configs", "sdk", "fc_config.h")),
+    ],
     CCFLAGS=[
         "-Wall",
         "-Wextra",
@@ -175,8 +178,6 @@ env.Append(
         "-D__riscv__",
     ],
 )
-
-env.AppendUnique(ASFLAGS=env.get("CCFLAGS", [])[:])
 
 if not board_config.get("build.ldscript", ""):
     env.Append(LIBPATH=[os.path.join(RT_DIR, "rules", "pulpissimo")])

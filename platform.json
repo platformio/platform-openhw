@@ -12,13 +12,13 @@
     "RISC-V"
   ],
   "engines": {
-    "platformio": "^5"
+    "platformio": "^6"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/platformio/platform-openhw.git"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "frameworks": {
     "pulp-sdk": {
       "package": "framework-pulp-sdk",
@@ -69,7 +69,7 @@
       "type": "debugger",
       "optional": true,
       "owner": "platformio",
-      "version": "~1.11200.0"
+      "version": "^1"
     }
   }
 }

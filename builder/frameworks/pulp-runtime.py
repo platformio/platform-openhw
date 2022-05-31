@@ -35,7 +35,10 @@ board_config = env.BoardConfig()
 env.SConscript("_bare.py")
 
 env.Append(
-    ASFLAGS=["-DLANGUAGE_ASSEMBLY"],
+    ASPPFLAGS=[
+        "-DLANGUAGE_ASSEMBLY",
+        "-include", "chips/pulpissimo/config.h",
+    ],
 
     CCFLAGS=[
         "-include", "chips/pulpissimo/config.h",
@@ -59,8 +62,6 @@ env.Append(
         os.path.join(RUNTIME_DIR, "kernel"),
     ]
 )
-
-env.AppendUnique(ASFLAGS=env.get("CCFLAGS", [])[:])
 
 if not board_config.get("build.ldscript", ""):
     env.Append(

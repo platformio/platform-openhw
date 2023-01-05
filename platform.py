@@ -74,8 +74,7 @@ class OpenhwPlatform(PlatformBase):
                             "$PROG_PATH"
                         ],
                         "executable": "riscvOVPsimCOREV"
-                    },
-                    "onboard": True
+                    }
                 }
 
             elif tool == "renode":
@@ -90,8 +89,7 @@ class OpenhwPlatform(PlatformBase):
                         ],
                         "ready_pattern": "GDB server with all CPUs started on port",
                         "executable": ("bin/Renode.exe" if IS_WINDOWS else "renode")
-                    },
-                    "onboard": True
+                    }
                 }
 
             else:
